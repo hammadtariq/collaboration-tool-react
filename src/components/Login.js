@@ -4,7 +4,7 @@ import "./Login.css";
 
 const FormItem = Form.Item;
 
-class NormalLoginForm extends React.Component {
+class NormalLoginForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -62,7 +62,5 @@ class NormalLoginForm extends React.Component {
 }
 
 const WrappedNormalLoginForm = Form.create()(NormalLoginForm);
-
-// ReactDOM.render(<WrappedNormalLoginForm />, mountNode);
 
 export default WrappedNormalLoginForm;
