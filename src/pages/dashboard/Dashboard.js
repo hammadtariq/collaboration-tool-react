@@ -79,7 +79,6 @@ class Dashboard extends Component {
               className="search-box"
             />
           </Header>
-          {/* </Row> */}
           <Content style={styles.Content}>
             <div style={{ padding: 24, background: "#fff", minHeight: 360 }}>
               <Route exact path={`/dashboard/`} component={Home} />
@@ -88,7 +87,7 @@ class Dashboard extends Component {
             </div>
           </Content>
           <Footer style={{ textAlign: "center" }}>
-            Ant Design ©2018 Created by Ant UED
+            Collaboration Design ©2018 Created by Ant UED
           </Footer>
         </Layout>
       </Layout>
