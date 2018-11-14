@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Layout, Menu, Icon, Input } from "antd";
+import { Layout, Menu, Icon, Input, Button } from "antd";
 import { Route } from "react-router-dom";
 import Home from "../home/Home";
 import Apps from "../apps/Apps";
@@ -10,7 +10,7 @@ const { Header, Content, Footer, Sider } = Layout;
 
 const styles = {
   Header: {
-    background: "#fff",
+    background: "#2785B8",
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
@@ -23,9 +23,11 @@ const styles = {
     left: 0
   },
   Content: {
-    margin: "24px 16px 0",
-    height: "calc(100vh - 10vh)",
-    overflow: "initial"
+    height: "auto",
+    minHeight: "calc(100vh - 10vh)",
+    overflow: "initial",
+    padding: "20px 0",
+    margin: "0px"
   }
 };
 class Dashboard extends Component {
@@ -40,55 +42,63 @@ class Dashboard extends Component {
   render() {
     return (
       <Layout>
-        <Sider style={styles.Sider}>
-          <div className="avatar-box">
-            <div className="logo-avatar">
-              <img src={require("../../assets/avatar.png")} />
-            </div>
-            <p />
+        <Header style={styles.Header} className="header">
+          <div className="logo-main">
+            <img src={require("../../assets/logo.svg")} />
           </div>
+          <Input.Search
+            placeholder="input search text"
+            onSearch={value => console.log(value)}
+            className="search-box"
+          />
 
-          <Menu
-            onClick={this.handleClick}
-            theme="dark"
-            mode="inline"
-            defaultSelectedKeys={["home"]}
-          >
-            <Menu.Item key="home">
-              <Icon type="user" />
-              <span className="nav-text">Home</span>
-            </Menu.Item>
-            <Menu.Item key="apps">
-              <Icon type="video-camera" />
-              <span className="nav-text">Apps</span>
-            </Menu.Item>
-            <Menu.Item key="settings">
-              <Icon type="upload" />
-              <span className="nav-text">Settings</span>
-            </Menu.Item>
-          </Menu>
-        </Sider>
-        <Layout style={{ marginLeft: 200 }}>
-          <Header style={styles.Header}>
-            <div className="logo-main">
-              <img src={require("../../assets/logo.svg")} />
-            </div>
-            <Input.Search
-              placeholder="input search text"
-              onSearch={value => console.log(value)}
-              className="search-box"
-            />
-          </Header>
-          <Content style={styles.Content}>
-            <div style={{ padding: 24, background: "#fff", minHeight: 360 }}>
-              <Route exact path={`/dashboard/`} component={Home} />
-              <Route exact path={`/dashboard/apps`} component={Apps} />
-              <Route exact path={`/dashboard/settings`} component={Settings} />
-            </div>
-          </Content>
-          <Footer style={{ textAlign: "center" }}>
-            Collaboration Design ©2018 Created by Ant UED
-          </Footer>
+          <div className="avatar-box">
+            {/* <div className="logo-avatar">
+              <img src={require("../../assets/avatar.png")} />
+            </div> */}
+            <Icon type="user" />
+            <span className="nav-text">Username</span>
+          </div>
+        </Header>
+        <Layout>
+          <Sider width={200} style={{ background: "#fff" }}>
+            <Menu
+              mode="inline"
+              onClick={this.handleClick.bind(this)}
+              defaultSelectedKeys={["1"]}
+              defaultOpenKeys={["sub1"]}
+              style={{ height: "100%", borderRight: 0 }}
+            >
+              <Menu.Item key="home">
+                <Icon type="home" />
+                <span className="nav-text">Home</span>
+              </Menu.Item>
+              <Menu.Item key="apps">
+                <Icon type="appstore" />
+                <span className="nav-text">Apps</span>
+              </Menu.Item>
+              <Menu.Item key="settings">
+                <Icon type="setting" />
+                <span className="nav-text">Settings</span>
+              </Menu.Item>
+            </Menu>
+          </Sider>
+          <Layout style={{ padding: "0 24px 24px" }}>
+            <Content style={styles.Content}>
+              <div style={{ padding: 24, background: "#fff", minHeight: 360 }}>
+                <Route exact path={`/dashboard/`} component={Home} />
+                <Route exact path={`/dashboard/apps`} component={Apps} />
+                <Route
+                  exact
+                  path={`/dashboard/settings`}
+                  component={Settings}
+                />
+              </div>
+            </Content>
+            <Footer style={{ textAlign: "center" }}>
+              Collaboration Design ©2018 Created by Ant UED
+            </Footer>
+          </Layout>
         </Layout>
       </Layout>
     );
