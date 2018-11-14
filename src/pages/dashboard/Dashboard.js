@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Layout, Menu, Icon, Input, Button } from "antd";
-import { Route } from "react-router-dom";
+import { Route, Link } from "react-router-dom";
 import Home from "../home/Home";
 import Apps from "../apps/Apps";
 import Settings from "../settings/Settings";
@@ -34,7 +34,13 @@ const styles = {
 class Dashboard extends Component {
   state = {};
 
-  handleClick = e => {
+  handleSideNavClick = e => {
+    console.log("click ", e);
+    const url = e.key !== "home" ? "/" + e.key : "";
+    this.props.history.push(`/dashboard${url}`);
+  };
+
+  handleNavClick = e => {
     console.log("click ", e);
     const url = e.key !== "home" ? "/" + e.key : "";
     this.props.history.push(`/dashboard${url}`);
@@ -52,35 +58,33 @@ class Dashboard extends Component {
           <Menu
             theme="dark"
             mode="horizontal"
-            defaultSelectedKeys={["1"]}
+            defaultSelectedKeys={["home"]}
             style={styles.NavBar}
+            onClick={this.handleNavClick.bind(this)}
           >
-            <Menu.Item key="1">
+            <Menu.Item key="home">
               <Input.Search
                 placeholder="input search text"
                 onSearch={value => console.log(value)}
                 className="search-box"
               />
             </Menu.Item>
-            <Menu.Item key="2">
+            <Menu.Item key="home">
               <Icon type="home" />
               Home
             </Menu.Item>
-            <Menu.Item key="3">
+            <Menu.Item key="settings">
               <Icon type="user" />
               Username
             </Menu.Item>
           </Menu>
-          <div style={{}}>
-            <div className="avatar-box" />
-          </div>
         </Header>
         <Layout>
           {/* <Sider width={200} style={{ background: "#fff" }}>
             <Menu
               mode="inline"
-              onClick={this.handleClick.bind(this)}
-              defaultSelectedKeys={["1"]}
+              onClick={this.handleSideNavClick.bind(this)}
+              defaultSelectedKeys={["home"]}
               defaultOpenKeys={["sub1"]}
               style={{ height: "100%", borderRight: 0 }}
             >
