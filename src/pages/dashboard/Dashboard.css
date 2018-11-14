@@ -1,37 +1,13 @@
-#components-layout-demo-custom-trigger .trigger {
-  font-size: 18px;
-  line-height: 64px;
-  padding: 0 24px;
-  cursor: pointer;
-  transition: color 0.3s;
-}
-
-#components-layout-demo-custom-trigger .trigger:hover {
-  color: #1890ff;
-}
-
-#components-layout-demo-custom-trigger .logo {
-  height: 32px;
-  margin: 16px;
-}
-
-.avatar-box {
-  color: #fff;
-  padding: 0px 10px;
-}
-
-.nav-text {
-  margin-left: 10px;
-}
-
 .logo-main {
   padding: 0;
   background: #fff;
   border: 1px solid #1890ff;
+  width: 150px;
+  float: left;
 }
 
 .logo-main img {
-  width: 120px;
+  width: 150px;
 }
 
 .search-box {

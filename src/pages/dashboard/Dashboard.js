@@ -10,11 +10,12 @@ const { Header, Content, Footer, Sider } = Layout;
 
 const styles = {
   Header: {
-    background: "#2785B8",
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    height: "10vh"
+    background: "#2785B8"
+  },
+  NavBar: {
+    lineHeight: "64px",
+    background: "inherit",
+    float: "right"
   },
   Sider: {
     overflow: "auto",
@@ -26,7 +27,7 @@ const styles = {
     height: "auto",
     minHeight: "calc(100vh - 10vh)",
     overflow: "initial",
-    padding: "20px 0",
+    padding: "25px 25px",
     margin: "0px"
   }
 };
@@ -42,26 +43,40 @@ class Dashboard extends Component {
   render() {
     return (
       <Layout>
-        <Header style={styles.Header} className="header">
-          <div className="logo-main">
-            <img src={require("../../assets/logo.svg")} />
+        <Header style={styles.Header}>
+          <div>
+            <div className="logo-main">
+              <img src={require("../../assets/logo.svg")} />
+            </div>
           </div>
-          <Input.Search
-            placeholder="input search text"
-            onSearch={value => console.log(value)}
-            className="search-box"
-          />
-
-          <div className="avatar-box">
-            {/* <div className="logo-avatar">
-              <img src={require("../../assets/avatar.png")} />
-            </div> */}
-            <Icon type="user" />
-            <span className="nav-text">Username</span>
+          <Menu
+            theme="dark"
+            mode="horizontal"
+            defaultSelectedKeys={["1"]}
+            style={styles.NavBar}
+          >
+            <Menu.Item key="1">
+              <Input.Search
+                placeholder="input search text"
+                onSearch={value => console.log(value)}
+                className="search-box"
+              />
+            </Menu.Item>
+            <Menu.Item key="2">
+              <Icon type="home" />
+              Home
+            </Menu.Item>
+            <Menu.Item key="3">
+              <Icon type="user" />
+              Username
+            </Menu.Item>
+          </Menu>
+          <div style={{}}>
+            <div className="avatar-box" />
           </div>
         </Header>
         <Layout>
-          <Sider width={200} style={{ background: "#fff" }}>
+          {/* <Sider width={200} style={{ background: "#fff" }}>
             <Menu
               mode="inline"
               onClick={this.handleClick.bind(this)}
@@ -82,11 +97,17 @@ class Dashboard extends Component {
                 <span className="nav-text">Settings</span>
               </Menu.Item>
             </Menu>
-          </Sider>
+          </Sider> */}
           <Layout style={{ padding: "0 24px 24px" }}>
             <Content style={styles.Content}>
-              <div style={{ padding: 24, background: "#fff", minHeight: 360 }}>
-                <Route exact path={`/dashboard/`} component={Home} />
+              <div
+                style={{
+                  padding: 24,
+                  background: "#fff",
+                  minHeight: "inherit"
+                }}
+              >
+                <Route exact path={`/dashboard/`} component={Apps} />
                 <Route exact path={`/dashboard/apps`} component={Apps} />
                 <Route
                   exact
