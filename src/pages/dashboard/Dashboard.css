@@ -1,0 +1,17 @@
+.logo-main {
+  padding: 0;
+  background: #fff;
+  border: 1px solid #1890ff;
+  width: 150px;
+  float: left;
+}
+
+.logo-main img {
+  width: 150px;
+}
+
+.search-box {
+  width: 200px;
+  height: 30px;
+  margin: 15px 0;
+}
