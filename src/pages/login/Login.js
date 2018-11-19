@@ -16,10 +16,19 @@ class NormalLoginForm extends Component {
               console.log("Received values of form: ", values);
               AuthService.login(values)
                   .then((response) => {
+                      cookies.set(TOKEN, response.headers['authorization']);
                       console.log("response: ", response);
-                      // cookies.set(TOKEN, response.data.sessionToken);
-                      // cookies.set(USER, response.data._embedded.user);
-                      // this.props.history.push('/dashboard')
+                      AuthService.loginToOkta(values)
+                          .then((response) => {
+                              cookies.set(TOKEN, response.headers['authorization']);
+                              console.log("response: ", response);
+                              // cookies.set(TOKEN, response.data.sessionToken);
+                              // cookies.set(USER, response.data._embedded.user);
+                              // this.props.history.push('/dashboard')
+                          })
+                          .catch((err) => {
+                              console.log("err: ", err.response);
+                          });
                   })
                   .catch((err) => {
                       console.log("err: ", err.response);
@@ -37,7 +46,7 @@ class NormalLoginForm extends Component {
                     <Card title="Login" bordered={false} style={{ width: 300 }}>
                         <Form onSubmit={this.handleSubmit} className="login-form">
                             <FormItem>
-                                {getFieldDecorator("username", {
+                                {getFieldDecorator("userName", {
                                     rules: [{ required: true, message: "Please input your username!" }]
                                 })(
                                     <Input
