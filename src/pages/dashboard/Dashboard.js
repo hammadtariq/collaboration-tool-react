@@ -5,8 +5,11 @@ import Home from "../home/Home";
 import Apps from "../apps/Apps";
 import Settings from "../settings/Settings";
 import "./Dashboard.css";
+import Cookies from 'universal-cookie';
+import { USER } from '../../utils/Constant';
 
 const { Header, Content, Footer, Sider } = Layout;
+const cookies = new Cookies();
 
 const styles = {
   Header: {
@@ -31,8 +34,18 @@ const styles = {
     margin: "0px"
   }
 };
+
 class Dashboard extends Component {
-  state = {};
+  state = {
+    user: {}
+  };
+
+    componentWillMount() {
+        let user = cookies.get(USER);
+        if(user) {
+          this.setState({ user })
+        }
+    }
 
   handleSideNavClick = e => {
     console.log("click ", e);
@@ -42,17 +55,22 @@ class Dashboard extends Component {
 
   handleNavClick = e => {
     console.log("click ", e);
-    const url = e.key !== "home" ? "/" + e.key : "";
-    this.props.history.push(`/dashboard${url}`);
+    if(e.key !== "search") {
+        const url = e.key !== "home" ? "/" + e.key : "";
+        this.props.history.push(`/dashboard${url}`);
+    }
   };
 
   render() {
+    const { user } = this.state;
+
     return (
       <Layout>
         <Header style={styles.Header}>
           <div>
             <div className="logo-main">
               <img src={require("../../assets/logo.svg")} />
+              <div className="logo-bottom-curve"></div>
             </div>
           </div>
           <Menu
@@ -62,7 +80,7 @@ class Dashboard extends Component {
             style={styles.NavBar}
             onClick={this.handleNavClick.bind(this)}
           >
-            <Menu.Item key="home">
+            <Menu.Item key="search">
               <Input.Search
                 placeholder="input search text"
                 onSearch={value => console.log(value)}
@@ -75,7 +93,7 @@ class Dashboard extends Component {
             </Menu.Item>
             <Menu.Item key="settings">
               <Icon type="user" />
-              Username
+                { `${user.profile.firstName}  ${user.profile.lastName}` }
             </Menu.Item>
           </Menu>
         </Header>

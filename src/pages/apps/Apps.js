@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Row, Col, Card, Carousel, Modal, Avatar } from "antd";
+import { Row, Col, Card, Carousel, Modal, Avatar, Divider } from "antd";
 import "./Apps.css";
 import AppService from "../../services/AppService";
 const { Meta } = Card;
@@ -62,18 +62,18 @@ class Apps extends Component {
                         </div>
                     </Carousel>
                 </div>
+                <Divider orientation="left">Apps</Divider>
                 <div style={{ background: "#ECECEC", padding: "10px" }}>
                     <Row gutter={16}>
                         {
                             apps.map((app, i)=> {
-                                console.log("logo: ", app._links.logo);
                                 return (
                                     <Col key={i} span={8}>
                                         <Card title={app.label}
                                               extra={<span onClick={this.showHelpModal.bind(this)}>Help</span>}
                                               hoverable={true}
                                               onClick={() => window.open(app._links.appLinks[0].href, "_blank")}
-                                              bordered={false}>
+                                              bordered={true}>
                                             <Meta
                                                 avatar={<Avatar shape="square" size={100} src={app._links.logo[0].href} />}
                                                 title={app.label}

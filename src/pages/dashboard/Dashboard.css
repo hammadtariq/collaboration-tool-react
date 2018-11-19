@@ -4,10 +4,26 @@
   border: 1px solid #1890ff;
   width: 150px;
   float: left;
+  position: relative;
+  height: 65px;
 }
 
 .logo-main img {
   width: 150px;
+}
+
+.logo-bottom-curve {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+  position: absolute;
+  right: 0;
+  bottom: -10px;
+  left: 0;
+  height: 20px;
+  border-bottom-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  background: #fff;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 1px 0, rgba(0, 0, 0, 0.05) 0 -1px 1px 0 inset;
+  z-index: 1
 }
 
 .search-box {

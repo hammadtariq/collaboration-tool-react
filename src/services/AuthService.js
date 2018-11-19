@@ -3,6 +3,9 @@ import axiosInstance from '../utils/AuthInterceptor'
 const Api = {
 
     login: function(payload) {
+        return axiosInstance.post('/login', payload);
+    },
+    loginToOkta: function(payload) {
         return axiosInstance.post('/authn', payload);
     },
     me: function() {
