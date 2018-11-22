@@ -42,7 +42,6 @@ class App extends Component {
       <Router>
         <Switch>
           <PrivateRoute
-            exact
             path="/dashboard"
             isLogin={false}
             component={Dashboard}

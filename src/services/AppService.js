@@ -478,6 +478,14 @@ const apps = [
   }
 ];
 
+const help = {
+  slack:
+    "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus quo repellendus facilis, autem impedit accusamus? Sunt, iusto, officia iste voluptates saepe pariatur animi est nostrum, consequatur excepturi sapiente odit nam?"
+};
+const appsHelpContent = function(apps) {
+  return apps.map(d => {});
+};
+
 const Api = {
   allApps: function() {
     return apps;

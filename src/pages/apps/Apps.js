@@ -50,37 +50,47 @@ class Apps extends Component {
         <div style={{ background: "#ECECEC", padding: "10px" }}>
           <Carousel autoplay>
             <div>
-              <img src={require("../../assets/OktaHelpCenter.png")} />
+              <img
+                className="slider-img"
+                src={require("../../assets/OktaHelpCenter.png")}
+              />
             </div>
             <div>
-              <img src={require("../../assets/Okta-SSO-Settings.png")} />
+              <img
+                className="slider-img"
+                src={require("../../assets/Okta-SSO-Settings.png")}
+              />
             </div>
             <div>
-              <img src={require("../../assets/OktaHelpCenter_2_0.png")} />
+              <img
+                className="slider-img"
+                src={require("../../assets/OktaHelpCenter_2_0.png")}
+              />
             </div>
           </Carousel>
         </div>
         <Divider orientation="left">Apps</Divider>
         <div style={{ background: "#ECECEC", padding: "40px" }}>
           <Row gutter={24}>
-            {apps.map((app, i) => {
-              return (
-                <Col key={i} span={4}>
-                  <Card
-                    title={app.label}
-                    extra={
-                      <Icon
-                        type="info-circle-o"
-                        onClick={this.showHelpModal.bind(this)}
-                      />
-                    }
-                    hoverable={true}
-                    onClick={() =>
-                      window.open(app._links.appLinks[0].href, "_blank")
-                    }
-                    bordered={false}
-                  >
-                    {/* <Meta
+            {apps
+              ? apps.map((app, i) => {
+                  return (
+                    <Col key={i} span={4}>
+                      <Card
+                        title={app.label}
+                        extra={
+                          <Icon
+                            type="info-circle-o"
+                            onClick={this.showHelpModal.bind(this)}
+                          />
+                        }
+                        hoverable={true}
+                        onClick={() =>
+                          window.open(app._links.appLinks[0].href, "_blank")
+                        }
+                        bordered={false}
+                      >
+                        {/* <Meta
                       avatar={
                         <Avatar
                           shape="square"
@@ -89,11 +99,12 @@ class Apps extends Component {
                         />
                       }
                     /> */}
-                    <img src={app._links.logo[0].href} style={{}} />
-                  </Card>
-                </Col>
-              );
-            })}
+                        <img src={app._links.logo[0].href} style={{}} />
+                      </Card>
+                    </Col>
+                  );
+                })
+              : null}
           </Row>
         </div>
         <Modal

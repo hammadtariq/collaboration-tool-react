@@ -1,27 +1,22 @@
 import React, { Component } from "react";
 import { Layout, Menu, Icon, Input } from "antd";
-// import { Route, Link } from "react-router-dom";
-// import Home from "../home/Home";
-// import Settings from "../settings/Settings";
+import { Route, Link } from "react-router-dom";
+import Home from "../home/Home";
+import Settings from "../settings/Settings";
 import Cookies from "universal-cookie";
 import { USER } from "../../utils/Constant";
 import AppService from "../../services/AppService";
 
 import Apps from "../apps/Apps";
-import Search from "../../components/Search";
 import "./Dashboard.css";
+import HeaderComp from "../../components/Header";
 
-const { Header, Content, Footer } = Layout;
+const { Content, Footer } = Layout;
 const cookies = new Cookies();
 
 const styles = {
   Header: {
     background: "#2785B8"
-  },
-  NavBar: {
-    lineHeight: "64px",
-    background: "inherit",
-    float: "right"
   },
   Sider: {
     overflow: "auto",
@@ -35,8 +30,7 @@ const styles = {
     overflow: "initial",
     padding: "25px 25px",
     margin: "0px"
-  },
-  Search: { width: "200px", height: "30px", margin: "15px 0" }
+  }
 };
 
 class Dashboard extends Component {
@@ -60,12 +54,8 @@ class Dashboard extends Component {
     this.props.history.push(`/dashboard${url}`);
   };
 
-  handleNavClick = e => {
-    console.log("click ", e);
-    if (e.key !== "search") {
-      const url = e.key !== "home" ? "/" + e.key : "";
-      this.props.history.push(`/dashboard${url}`);
-    }
+  AppsComp = props => {
+    return <Apps apps={this.state.apps} {...props} />;
   };
 
   render() {
@@ -73,44 +63,12 @@ class Dashboard extends Component {
 
     return (
       <Layout>
-        <Header style={styles.Header}>
-          <div>
-            <div className="logo-main">
-              <img src={require("../../assets/logo.svg")} />
-              <div className="logo-bottom-curve" />
-            </div>
-          </div>
-          <Menu
-            theme="dark"
-            mode="horizontal"
-            defaultSelectedKeys={["home"]}
-            style={styles.NavBar}
-            onClick={this.handleNavClick.bind(this)}
-          >
-            <Menu.Item key="search">
-              {/* <Input.Search
-                placeholder="Launch App"
-                onSearch={value => console.log(value)}
-                className="search-box"
-              /> */}
-              <Search
-                style={styles.Search}
-                data={apps}
-                placeholder="Launch App"
-              />
-            </Menu.Item>
-            <Menu.Item key="home">
-              <Icon type="home" />
-              Home
-            </Menu.Item>
-            <Menu.Item key="settings">
-              <Icon type="user" />
-              {user === undefined
-                ? `${user.profile.firstName}  ${user.profile.lastName}`
-                : ""}
-            </Menu.Item>
-          </Menu>
-        </Header>
+        <HeaderComp
+          style={styles.Header}
+          user={user}
+          apps={apps}
+          history={this.props.history}
+        />
         <Layout>
           {/* <Sider width={200} style={{ background: "#fff" }}>
             <Menu
@@ -143,22 +101,17 @@ class Dashboard extends Component {
                   minHeight: "inherit"
                 }}
               >
-                <Apps apps={this.state.apps} />
-                {/* <Route
-                  exact
-                  path={`/dashboard/`}
-                  component={Apps}
-                /> */}
-                {/* <Route
+                <Route exact path={`/dashboard/`} component={this.AppsComp} />
+                <Route
                   exact
                   path={`/dashboard/apps`}
-                  component={Apps}
+                  component={this.AppsComp}
                 />
                 <Route
                   exact
                   path={`/dashboard/settings`}
                   component={Settings}
-                /> */}
+                />
               </div>
             </Content>
             <Footer style={{ textAlign: "center" }}>
