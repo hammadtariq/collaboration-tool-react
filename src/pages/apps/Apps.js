@@ -6,7 +6,8 @@ const { Meta } = Card;
 
 class Apps extends Component {
   state = {
-    visible: false
+    visible: false,
+    selectedApp: null
   };
 
   componentDidMount() {
@@ -21,30 +22,39 @@ class Apps extends Component {
     //     });
   }
 
-  showHelpModal(e) {
+  showHelpModal(e, id) {
     console.log("e: ", e);
     e.stopPropagation();
     this.setState({
-      visible: true
+      visible: true,
+      selectedApp: id
     });
   }
 
   handleOk = e => {
     console.log(e);
     this.setState({
-      visible: false
+      visible: false,
+      selectedApp: null
     });
   };
 
   handleCancel = e => {
     console.log(e);
     this.setState({
-      visible: false
+      visible: false,
+      selectedApp: null
     });
   };
 
   render() {
     let { apps } = this.props;
+    const modalTitle =
+      this.state.selectedApp !== null
+        ? apps[this.state.selectedApp].label
+        : "No information found";
+    const modalContent =
+      this.state.selectedApp !== null ? apps[this.state.selectedApp].help : "";
     return (
       <div>
         <div style={{ background: "#ECECEC", padding: "10px" }}>
@@ -52,19 +62,25 @@ class Apps extends Component {
             <div>
               <img
                 className="slider-img"
-                src={require("../../assets/OktaHelpCenter.png")}
+                src={require("../../assets/img1.png")}
               />
             </div>
             <div>
               <img
                 className="slider-img"
-                src={require("../../assets/Okta-SSO-Settings.png")}
+                src={require("../../assets/img2.png")}
               />
             </div>
             <div>
               <img
                 className="slider-img"
-                src={require("../../assets/OktaHelpCenter_2_0.png")}
+                src={require("../../assets/img3.png")}
+              />
+            </div>
+            <div>
+              <img
+                className="slider-img"
+                src={require("../../assets/img4.png")}
               />
             </div>
           </Carousel>
@@ -81,7 +97,7 @@ class Apps extends Component {
                         extra={
                           <Icon
                             type="info-circle-o"
-                            onClick={this.showHelpModal.bind(this)}
+                            onClick={e => this.showHelpModal(e, i)}
                           />
                         }
                         hoverable={true}
@@ -90,15 +106,6 @@ class Apps extends Component {
                         }
                         bordered={false}
                       >
-                        {/* <Meta
-                      avatar={
-                        <Avatar
-                          shape="square"
-                          size="default"
-                          src={app._links.logo[0].href}
-                        />
-                      }
-                    /> */}
                         <img src={app._links.logo[0].href} style={{}} />
                       </Card>
                     </Col>
@@ -108,14 +115,12 @@ class Apps extends Component {
           </Row>
         </div>
         <Modal
-          title="Help"
+          title={modalTitle}
           visible={this.state.visible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
+          <p>{modalContent}</p>
         </Modal>
       </div>
     );

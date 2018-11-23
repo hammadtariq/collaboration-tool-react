@@ -41,10 +41,14 @@ class NormalLoginForm extends Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
-      <Row className="app" type="flex" justify="center" align="middle">
+      <Row className="mainBody" type="flex" justify="center" align="middle">
         <Col>
           <div style={{ background: "#ECECEC", padding: "30px" }}>
-            <Card title="Login" bordered={false} style={{ width: 300 }}>
+            <Card
+              title="Login"
+              bordered={false}
+              style={{ width: 300, height: 300 }}
+            >
               <Form onSubmit={this.handleSubmit} className="login-form">
                 <FormItem>
                   {getFieldDecorator("userName", {
