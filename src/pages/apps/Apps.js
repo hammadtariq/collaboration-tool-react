@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { Row, Col, Card, Icon, Carousel, Modal, Avatar, Divider } from "antd";
+import { Row, Col, Card, Icon, Carousel, Modal, Divider } from "antd";
 import "./Apps.css";
 import AppService from "../../services/AppService";
-const { Meta } = Card;
 
 class Apps extends Component {
   state = {
@@ -87,27 +86,33 @@ class Apps extends Component {
         </div>
         <Divider orientation="left">Apps</Divider>
         <div style={{ background: "#ECECEC", padding: "40px" }}>
-          <Row gutter={24}>
+          <Row gutter={24} type="flex" justify="start">
             {apps
               ? apps.map((app, i) => {
                   return (
-                    <Col key={i} span={4}>
+                    <Col
+                      key={i}
+                      span={6}
+                      style={{ borderRight: "1px solid gainsboro" }}
+                    >
                       <Card
-                        title={app.label}
-                        extra={
-                          <Icon
-                            type="info-circle-o"
-                            onClick={e => this.showHelpModal(e, i)}
-                          />
-                        }
                         hoverable={true}
                         onClick={() =>
                           window.open(app._links.appLinks[0].href, "_blank")
                         }
-                        bordered={false}
+                        bordered={true}
                       >
-                        <img src={app._links.logo[0].href} style={{}} />
+                        <div style={{ textAlign: "center" }}>
+                          <img src={app._links.logo[0].href} style={{}} />
+                        </div>
                       </Card>
+                      <div className="app-info">
+                        <h3 style={{}}>{app.label}</h3>
+                        <div className="module last-line">
+                          <p>{app.help}</p>
+                        </div>
+                        <a onClick={e => this.showHelpModal(e, i)}>view more</a>
+                      </div>
                     </Col>
                   );
                 })
