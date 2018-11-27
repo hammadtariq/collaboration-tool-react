@@ -14,27 +14,26 @@ class NormalLoginForm extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log("Received values of form: ", values);
-        this.props.history.push("/dashboard");
-
-        //   AuthService.login(values)
-        //       .then((response) => {
-        //           cookies.set(TOKEN, response.headers['authorization']);
-        //           console.log("response: ", response);
-        //           AuthService.loginToOkta(values)
-        //               .then((response) => {
-        //                   cookies.set(TOKEN, response.headers['authorization']);
-        //                   console.log("response: ", response);
-        //                   // cookies.set(TOKEN, response.data.sessionToken);
-        //                   // cookies.set(USER, response.data._embedded.user);
-        //                   // this.props.history.push('/dashboard')
-        //               })
-        //               .catch((err) => {
-        //                   console.log("err: ", err.response);
-        //               });
-        //       })
-        //       .catch((err) => {
-        //           console.log("err: ", err.response);
-        //       });
+        // this.props.history.push("/dashboard");
+        AuthService.login(values)
+          .then(response => {
+            cookies.set(TOKEN, response.headers["authorization"]);
+            console.log("response: ", response);
+            AuthService.loginToOkta(values)
+              .then(response => {
+                cookies.set(USER, response.data._embedded.user);
+                this.props.history.push("/dashboard");
+                // cookies.set(TOKEN, response.headers["authorization"]);
+                console.log("response: ", response);
+                // cookies.set(TOKEN, response.data.sessionToken);
+              })
+              .catch(err => {
+                console.log("err: ", err.response);
+              });
+          })
+          .catch(err => {
+            console.log("err: ", err.response);
+          });
       }
     });
   };
@@ -42,10 +41,14 @@ class NormalLoginForm extends Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
-      <Row className="app" type="flex" justify="center" align="middle">
+      <Row className="mainBody" type="flex" justify="center" align="middle">
         <Col>
           <div style={{ background: "#ECECEC", padding: "30px" }}>
-            <Card title="Login" bordered={false} style={{ width: 300 }}>
+            <Card
+              title="Login"
+              bordered={false}
+              style={{ width: 300, height: 300 }}
+            >
               <Form onSubmit={this.handleSubmit} className="login-form">
                 <FormItem>
                   {getFieldDecorator("userName", {

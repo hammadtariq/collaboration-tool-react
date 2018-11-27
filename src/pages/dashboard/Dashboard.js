@@ -1,24 +1,22 @@
 import React, { Component } from "react";
-import { Layout, Menu, Icon, Input, Button } from "antd";
+import { Layout, Menu, Icon, Input, Spin } from "antd";
 import { Route, Link } from "react-router-dom";
 import Home from "../home/Home";
-import Apps from "../apps/Apps";
 import Settings from "../settings/Settings";
-import "./Dashboard.css";
-import Cookies from 'universal-cookie';
-import { USER } from '../../utils/Constant';
+import Cookies from "universal-cookie";
+import { USER } from "../../utils/Constant";
+import AppService from "../../services/AppService";
 
-const { Header, Content, Footer, Sider } = Layout;
+import Apps from "../apps/Apps";
+import "./Dashboard.css";
+import HeaderComp from "../../components/Header";
+
+const { Content, Footer } = Layout;
 const cookies = new Cookies();
 
 const styles = {
   Header: {
     background: "#2785B8"
-  },
-  NavBar: {
-    lineHeight: "64px",
-    background: "inherit",
-    float: "right"
   },
   Sider: {
     overflow: "auto",
@@ -37,15 +35,28 @@ const styles = {
 
 class Dashboard extends Component {
   state = {
-    user: {}
+    loading: false,
+    user: {},
+    apps: []
   };
 
-    componentWillMount() {
-        let user = cookies.get(USER);
-        if(user) {
-          this.setState({ user })
-        }
+  componentWillMount() {
+    let user = cookies.get(USER);
+    if (user) {
+      console.log("user...", user);
+      this.setState({ user, loading: true });
+      AppService.allApps(user.id)
+        .then(({ data }) => {
+          console.log("aa...", data);
+          const apps = AppService.addHelpContent(data);
+          this.setState({ apps, loading: false });
+        })
+        .catch(err => {
+          console.log("error from apps...", err);
+          this.setState({ loading: false });
+        });
     }
+  }
 
   handleSideNavClick = e => {
     console.log("click ", e);
@@ -53,50 +64,27 @@ class Dashboard extends Component {
     this.props.history.push(`/dashboard${url}`);
   };
 
-  handleNavClick = e => {
-    console.log("click ", e);
-    if(e.key !== "search") {
-        const url = e.key !== "home" ? "/" + e.key : "";
-        this.props.history.push(`/dashboard${url}`);
-    }
+  AppsComp = props => {
+    return this.state.loading ? (
+      <div className="spinner">
+        <Spin />
+      </div>
+    ) : (
+      <Apps apps={this.state.apps} {...props} />
+    );
   };
 
   render() {
-    const { user } = this.state;
+    const { user, apps } = this.state;
 
     return (
       <Layout>
-        <Header style={styles.Header}>
-          <div>
-            <div className="logo-main">
-              <img src={require("../../assets/logo.svg")} />
-              <div className="logo-bottom-curve"></div>
-            </div>
-          </div>
-          <Menu
-            theme="dark"
-            mode="horizontal"
-            defaultSelectedKeys={["home"]}
-            style={styles.NavBar}
-            onClick={this.handleNavClick.bind(this)}
-          >
-            <Menu.Item key="search">
-              <Input.Search
-                placeholder="input search text"
-                onSearch={value => console.log(value)}
-                className="search-box"
-              />
-            </Menu.Item>
-            <Menu.Item key="home">
-              <Icon type="home" />
-              Home
-            </Menu.Item>
-            <Menu.Item key="settings">
-              <Icon type="user" />
-                { `${user.profile.firstName}  ${user.profile.lastName}` }
-            </Menu.Item>
-          </Menu>
-        </Header>
+        <HeaderComp
+          style={styles.Header}
+          user={user.profile}
+          apps={apps}
+          history={this.props.history}
+        />
         <Layout>
           {/* <Sider width={200} style={{ background: "#fff" }}>
             <Menu
@@ -129,8 +117,12 @@ class Dashboard extends Component {
                   minHeight: "inherit"
                 }}
               >
-                <Route exact path={`/dashboard/`} component={Apps} />
-                <Route exact path={`/dashboard/apps`} component={Apps} />
+                <Route exact path={`/dashboard/`} component={this.AppsComp} />
+                <Route
+                  exact
+                  path={`/dashboard/apps`}
+                  component={this.AppsComp}
+                />
                 <Route
                   exact
                   path={`/dashboard/settings`}

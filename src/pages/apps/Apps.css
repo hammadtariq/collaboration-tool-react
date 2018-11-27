@@ -1,6 +1,6 @@
 .ant-carousel .slick-slide {
   text-align: center;
-  height: 160px;
+  height: 260px;
   line-height: 160px;
   background: #364d79;
   overflow: hidden;
@@ -8,4 +8,86 @@
 
 .ant-carousel .slick-slide h3 {
   color: #fff;
+}
+
+.slider-img {
+  width: 100%;
+  height: 260px;
+}
+
+.slider-box {
+}
+
+.slider-box p {
+  color: #fff;
+  z-index: 4;
+}
+
+.app-info {
+  padding: 20px 0 30px 0;
+}
+
+.module {
+  width: 250px;
+  margin: 0 0 1em 0;
+  overflow: hidden;
+}
+
+.module p {
+  margin: 0;
+}
+
+.last-line {
+  height: 3.6em; /* exactly three lines */
+  text-overflow: -o-ellipsis-lastline;
+}
+
+.app-p {
+  display: block;
+  display: -webkit-box;
+  max-width: 200px;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-container > .ant-tabs-card > .ant-tabs-content {
+  /* height: 120px; */
+  margin-top: -16px;
+}
+
+.card-container > .ant-tabs-card > .ant-tabs-content > .ant-tabs-tabpane {
+  background: #fff;
+  padding: 16px;
+}
+
+.card-container > .ant-tabs-card > .ant-tabs-bar {
+  border-color: #fff;
+}
+
+.card-container > .ant-tabs-card > .ant-tabs-bar .ant-tabs-tab {
+  border-color: transparent;
+  background: transparent;
+}
+
+.card-container > .ant-tabs-card > .ant-tabs-bar .ant-tabs-tab-active {
+  border-color: #fff;
+  background: #fff;
+}
+
+.ant-modal-body {
+  padding: 0;
+}
+
+.ant-modal-header {
+  background: #2785b8;
+}
+
+.ant-modal-title {
+  color: #fff !important;
+}
+
+.ant-modal-close-x > .anticon {
+  color: #fff !important;
 }
