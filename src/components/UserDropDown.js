@@ -1,10 +1,14 @@
 import React from "react";
-import { Menu, Dropdown, Icon } from "antd";
+import { Menu, Dropdown, Icon, Divider } from "antd";
+import { TOKEN } from "../utils/Constant";
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 
-const UserDropDown = ({ user, history }) => {
+const UserDropDown = ({ user, history, logout }) => {
   const handleNavClick = e => {
-    console.log("click ", e);
     if (e.key === "signout") {
+      let user = cookies.remove(TOKEN);
+      console.log("logout: ", user);
       history.push(`/login`);
       return;
     }
@@ -12,12 +16,12 @@ const UserDropDown = ({ user, history }) => {
   };
 
   const menu = (
-    <Menu onClick={handleNavClick}>
+    <Menu onClick={handleNavClick} style={{ width: 100, textAlign: "center" }}>
       <Menu.Item key="settings">
         <a href="">Settings</a>
       </Menu.Item>
       <Menu.Item key="signout">
-        <a href="">Signout</a>
+        <a href="">Sign out</a>
       </Menu.Item>
     </Menu>
   );
@@ -25,10 +29,9 @@ const UserDropDown = ({ user, history }) => {
   return (
     <Dropdown overlay={menu} trigger={["click"]}>
       <a href="#">
-        <Icon type="user" />
-        {user === undefined
-          ? `${user.profile.firstName}  ${user.profile.lastName}`
-          : "Hammad Tariq"}
+        <Icon type="user" style={{ fontSize: 15 }} />
+        {user !== undefined ? `${user.firstName}` : ""}
+        <Icon type="caret-down" style={{ fontSize: 10, marginLeft: 5 }} />
       </a>
     </Dropdown>
   );

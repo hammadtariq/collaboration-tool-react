@@ -15,6 +15,14 @@
   height: 260px;
 }
 
+.slider-box {
+}
+
+.slider-box p {
+  color: #fff;
+  z-index: 4;
+}
+
 .app-info {
   padding: 20px 0 30px 0;
 }
@@ -42,4 +50,44 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.card-container > .ant-tabs-card > .ant-tabs-content {
+  /* height: 120px; */
+  margin-top: -16px;
+}
+
+.card-container > .ant-tabs-card > .ant-tabs-content > .ant-tabs-tabpane {
+  background: #fff;
+  padding: 16px;
+}
+
+.card-container > .ant-tabs-card > .ant-tabs-bar {
+  border-color: #fff;
+}
+
+.card-container > .ant-tabs-card > .ant-tabs-bar .ant-tabs-tab {
+  border-color: transparent;
+  background: transparent;
+}
+
+.card-container > .ant-tabs-card > .ant-tabs-bar .ant-tabs-tab-active {
+  border-color: #fff;
+  background: #fff;
+}
+
+.ant-modal-body {
+  padding: 0;
+}
+
+.ant-modal-header {
+  background: #2785b8;
+}
+
+.ant-modal-title {
+  color: #fff !important;
+}
+
+.ant-modal-close-x > .anticon {
+  color: #fff !important;
 }

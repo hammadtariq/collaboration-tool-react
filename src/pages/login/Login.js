@@ -14,18 +14,18 @@ class NormalLoginForm extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log("Received values of form: ", values);
-        this.props.history.push("/dashboard");
+        // this.props.history.push("/dashboard");
         AuthService.login(values)
           .then(response => {
             cookies.set(TOKEN, response.headers["authorization"]);
             console.log("response: ", response);
             AuthService.loginToOkta(values)
               .then(response => {
-                cookies.set(TOKEN, response.headers["authorization"]);
+                cookies.set(USER, response.data._embedded.user);
+                this.props.history.push("/dashboard");
+                // cookies.set(TOKEN, response.headers["authorization"]);
                 console.log("response: ", response);
                 // cookies.set(TOKEN, response.data.sessionToken);
-                // cookies.set(USER, response.data._embedded.user);
-                // this.props.history.push('/dashboard')
               })
               .catch(err => {
                 console.log("err: ", err.response);

@@ -8,10 +8,14 @@ const Api = {
     });
   },
   loginToOkta: function(payload) {
-    return axiosInstance.post("/user/auth", payload);
+    return axiosInstance.post(
+      `/okta/user/auth?userName=${payload.userName}&password=${
+        payload.password
+      }`
+    );
   },
   me: function() {
-    return axiosInstance.get("/users/me");
+    return axiosInstance.get("/okta/users/me");
   }
 };
 

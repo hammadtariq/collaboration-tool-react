@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Select, Spin } from "antd";
+import { Select, Icon } from "antd";
 import debounce from "lodash/debounce";
 
 const Option = Select.Option;
@@ -49,6 +49,8 @@ class Search extends Component {
         onSearch={this.fetchUser.bind(this)}
         onChange={this.handleChange}
         style={style}
+        prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
+        suffix={<Icon type="close-circle" />}
       >
         {data.map(d => (
           <Option
@@ -63,9 +65,12 @@ class Search extends Component {
                 padding: 10
               }}
             >
-              <img style={{ width: 60 }} src={d._links.logo[0].href} />
+              <img
+                style={{ maxWidth: 50, height: 20 }}
+                src={d._links.logo[0].href}
+              />
             </span>
-            <span style={{ padding: 20 }}>{d.label}</span>
+            <span style={{ padding: "20 0 20 0" }}>{d.label}</span>
           </Option>
         ))}
       </Select>

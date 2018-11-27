@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Layout, Menu, Icon, Input } from "antd";
+import { Layout, Menu, Icon, Input, Spin } from "antd";
 import { Route, Link } from "react-router-dom";
 import Home from "../home/Home";
 import Settings from "../settings/Settings";
@@ -35,6 +35,7 @@ const styles = {
 
 class Dashboard extends Component {
   state = {
+    loading: false,
     user: {},
     apps: []
   };
@@ -42,10 +43,19 @@ class Dashboard extends Component {
   componentWillMount() {
     let user = cookies.get(USER);
     if (user) {
-      this.setState({ user });
+      console.log("user...", user);
+      this.setState({ user, loading: true });
+      AppService.allApps(user.id)
+        .then(({ data }) => {
+          console.log("aa...", data);
+          const apps = AppService.addHelpContent(data);
+          this.setState({ apps, loading: false });
+        })
+        .catch(err => {
+          console.log("error from apps...", err);
+          this.setState({ loading: false });
+        });
     }
-    const apps = AppService.allApps();
-    this.setState({ apps });
   }
 
   handleSideNavClick = e => {
@@ -55,7 +65,13 @@ class Dashboard extends Component {
   };
 
   AppsComp = props => {
-    return <Apps apps={this.state.apps} {...props} />;
+    return this.state.loading ? (
+      <div className="spinner">
+        <Spin />
+      </div>
+    ) : (
+      <Apps apps={this.state.apps} {...props} />
+    );
   };
 
   render() {
@@ -65,7 +81,7 @@ class Dashboard extends Component {
       <Layout>
         <HeaderComp
           style={styles.Header}
-          user={user}
+          user={user.profile}
           apps={apps}
           history={this.props.history}
         />

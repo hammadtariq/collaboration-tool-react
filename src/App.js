@@ -43,7 +43,7 @@ class App extends Component {
         <Switch>
           <PrivateRoute
             path="/dashboard"
-            isLogin={false}
+            isLogin={true}
             component={Dashboard}
           />
           <PrivateRoute exact path="/login" isLogin={false} component={Login} />

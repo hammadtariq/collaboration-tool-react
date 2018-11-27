@@ -1,7 +1,6 @@
 .logo-main {
   padding: 0;
   background: #fff;
-  border: 1px solid #1890ff;
   width: 150px;
   float: left;
   position: relative;
@@ -23,11 +22,25 @@
   border-bottom-right-radius: 50%;
   background: #fff;
   box-shadow: rgba(0, 0, 0, 0.1) 0 1px 0, rgba(0, 0, 0, 0.05) 0 -1px 1px 0 inset;
-  z-index: 1
+  z-index: 1;
 }
 
 .search-box {
   width: 200px;
   height: 30px;
   margin: 15px 0;
+}
+
+.ant-select-selection {
+  /* background: #257cab !important; */
+  border-radius: 50px !important;
+}
+
+.spinner {
+  text-align: center;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+  margin-bottom: 20px;
+  padding: 30px 50px;
+  margin: 20px 0;
 }

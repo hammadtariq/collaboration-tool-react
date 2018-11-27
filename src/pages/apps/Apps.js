@@ -2,27 +2,56 @@ import React, { Component } from "react";
 import { Row, Col, Card, Icon, Carousel, Modal, Divider } from "antd";
 import "./Apps.css";
 import AppService from "../../services/AppService";
+import { Tabs } from "antd";
+import AppItems from "../../components/AppItems";
+const TabPane = Tabs.TabPane;
 
 class Apps extends Component {
-  state = {
-    visible: false,
-    selectedApp: null
-  };
-
-  componentDidMount() {
-    // let apps = AppService.allApps();
-    // this.setState({ apps });
-    // AppService.allApps()
-    //     .then((response) => {
-    //        console.log("response: ", response);
-    //     })
-    //     .catch((err) => {
-    //         console.log("err: ", err.response);
-    //     });
+  constructor(props) {
+    super(props);
+    const panes = [{ title: "Work", content: "", key: "1" }];
+    this.state = {
+      visible: false,
+      selectedApp: null,
+      activeKey: panes[0].key,
+      panes
+    };
+    this.newTabIndex = 0;
   }
 
+  componentDidMount() {}
+
+  onChange = activeKey => {
+    this.setState({ activeKey });
+  };
+
+  onEdit = (targetKey, action) => {
+    this[action](targetKey);
+  };
+
+  add = () => {
+    const panes = this.state.panes;
+    const activeKey = `newTab${this.newTabIndex++}`;
+    panes.push({ title: "New Tab", content: "New Tab Pane", key: activeKey });
+    this.setState({ panes, activeKey });
+  };
+
+  remove = targetKey => {
+    let activeKey = this.state.activeKey;
+    let lastIndex;
+    this.state.panes.forEach((pane, i) => {
+      if (pane.key === targetKey) {
+        lastIndex = i - 1;
+      }
+    });
+    const panes = this.state.panes.filter(pane => pane.key !== targetKey);
+    if (lastIndex >= 0 && activeKey === targetKey) {
+      activeKey = panes[lastIndex].key;
+    }
+    this.setState({ panes, activeKey });
+  };
+
   showHelpModal(e, id) {
-    console.log("e: ", e);
     e.stopPropagation();
     this.setState({
       visible: true,
@@ -48,21 +77,32 @@ class Apps extends Component {
 
   render() {
     let { apps } = this.props;
-    const modalTitle =
-      this.state.selectedApp !== null
-        ? apps[this.state.selectedApp].label
-        : "No information found";
-    const modalContent =
-      this.state.selectedApp !== null ? apps[this.state.selectedApp].help : "";
+    let modalTitle = "",
+      modalContent = "",
+      modalImg = "";
+    if (this.state.selectedApp !== null) {
+      const app = apps[this.state.selectedApp];
+      modalTitle = app.label;
+      modalContent = app.help;
+      modalImg = app._links.logo[0].href;
+    }
+
     return (
       <div>
         <div style={{ background: "#ECECEC", padding: "10px" }}>
           <Carousel autoplay>
-            <div>
+            <div className="slider-box">
               <img
                 className="slider-img"
                 src={require("../../assets/img1.png")}
               />
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Accusantium sequi provident fuga dolorem deserunt, explicabo
+                reprehenderit consectetur repudiandae consequatur, doloribus
+                alias cum vitae voluptatibus ut quis temporibus recusandae error
+                tenetur!
+              </p>
             </div>
             <div>
               <img
@@ -84,48 +124,52 @@ class Apps extends Component {
             </div>
           </Carousel>
         </div>
-        <Divider orientation="left">Apps</Divider>
         <div style={{ background: "#ECECEC", padding: "40px" }}>
-          <Row gutter={24} type="flex" justify="start">
-            {apps
-              ? apps.map((app, i) => {
-                  return (
-                    <Col
-                      key={i}
-                      span={6}
-                      style={{ borderRight: "1px solid gainsboro" }}
-                    >
-                      <Card
-                        hoverable={true}
-                        onClick={() =>
-                          window.open(app._links.appLinks[0].href, "_blank")
-                        }
-                        bordered={true}
-                      >
-                        <div style={{ textAlign: "center" }}>
-                          <img src={app._links.logo[0].href} style={{}} />
-                        </div>
-                      </Card>
-                      <div className="app-info">
-                        <h3 style={{}}>{app.label}</h3>
-                        <div className="module last-line">
-                          <p>{app.help}</p>
-                        </div>
-                        <a onClick={e => this.showHelpModal(e, i)}>view more</a>
-                      </div>
-                    </Col>
-                  );
-                })
-              : null}
-          </Row>
+          <div className="card-container">
+            <Tabs
+              hideAdd
+              onChange={this.onChange}
+              activeKey={this.state.activeKey}
+              type="editable-card"
+              onEdit={this.onEdit}
+            >
+              {this.state.panes.map(pane => (
+                <TabPane tab={pane.title} key={pane.key}>
+                  {
+                    <AppItems
+                      apps={apps}
+                      showHelpModal={this.showHelpModal.bind(this)}
+                    />
+                  }
+                </TabPane>
+              ))}
+            </Tabs>
+          </div>
         </div>
         <Modal
-          title={modalTitle}
+          title={`Details of ${modalTitle}`}
           visible={this.state.visible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
+          footer={null}
+          style={{ padding: "24px 0 24px 0" }}
         >
-          <p>{modalContent}</p>
+          <div>
+            <Row style={{ background: "#ECECEC", padding: 20 }}>
+              <img src={modalImg} />
+            </Row>
+            <Row
+              style={{ padding: 20 }}
+              type="flex"
+              justify="center"
+              align="middle"
+            >
+              <Col span={12}>{modalContent}</Col>
+              <Col span={12} style={{ textAlign: "center" }}>
+                <img src={modalImg} />
+              </Col>
+            </Row>
+          </div>
         </Modal>
       </div>
     );
