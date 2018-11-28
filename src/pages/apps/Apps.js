@@ -92,35 +92,64 @@ class Apps extends Component {
         <div style={{ background: "#ECECEC", padding: "10px" }}>
           <Carousel autoplay>
             <div className="slider-box">
-              <img
-                className="slider-img"
-                src={require("../../assets/img1.png")}
-              />
-              <p>
+              <div className="slider-img">
+                <img src={require("../../assets/img1.png")} />
+              </div>
+              <div className="slider-detail">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Accusantium sequi provident fuga dolorem deserunt, explicabo
                 reprehenderit consectetur repudiandae consequatur, doloribus
                 alias cum vitae voluptatibus ut quis temporibus recusandae error
                 tenetur!
-              </p>
+                <ul style={{ paddingTop: 20 }}>
+                  <li>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  </li>
+                  <li>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  </li>
+                </ul>
+              </div>
             </div>
-            <div>
-              <img
-                className="slider-img"
-                src={require("../../assets/img2.png")}
-              />
+            <div className="slider-box">
+              <div className="slider-img">
+                <img src={require("../../assets/img2.png")} />
+              </div>
+              <div className="slider-detail">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Accusantium sequi provident fuga dolorem deserunt, explicabo
+                reprehenderit consectetur repudiandae consequatur, doloribus
+                alias cum vitae voluptatibus ut quis temporibus recusandae error
+                tenetur!
+                <ul style={{ paddingTop: 20 }}>
+                  <li>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  </li>
+                  <li>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  </li>
+                </ul>
+              </div>
             </div>
-            <div>
-              <img
-                className="slider-img"
-                src={require("../../assets/img3.png")}
-              />
-            </div>
-            <div>
-              <img
-                className="slider-img"
-                src={require("../../assets/img4.png")}
-              />
+            <div className="slider-box">
+              <div className="slider-img">
+                <img src={require("../../assets/img3.png")} />
+              </div>
+              <div className="slider-detail">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Accusantium sequi provident fuga dolorem deserunt, explicabo
+                reprehenderit consectetur repudiandae consequatur, doloribus
+                alias cum vitae voluptatibus ut quis temporibus recusandae error
+                tenetur!
+                <ul style={{ paddingTop: 20 }}>
+                  <li>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  </li>
+                  <li>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  </li>
+                </ul>
+              </div>
             </div>
           </Carousel>
         </div>

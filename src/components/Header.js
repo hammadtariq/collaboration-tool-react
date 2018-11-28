@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Menu, Icon } from "antd";
+import { Layout, Menu, Icon, Dropdown } from "antd";
 import Search from "./Search";
 import UserDropDown from "./UserDropDown";
 const { Header } = Layout;
@@ -17,12 +17,21 @@ const styles = {
   }
 };
 
+const menu = (
+  <Menu onClick={() => {}}>
+    <Menu.Item key="1">
+      <a href="">No notifications</a>
+    </Menu.Item>
+  </Menu>
+);
+
 const HeaderComp = ({ style, user, apps, history }) => {
   const handleNavClick = e => {
     if (e.key === "home") {
       history.push(`/dashboard/apps`);
     }
   };
+
   return (
     <Header style={style}>
       <div>
@@ -51,6 +60,9 @@ const HeaderComp = ({ style, user, apps, history }) => {
             type="caret-down"
             style={{ fontSize: 10, margin: "0 0 0 -5px", padding: 0 }}
           />
+          <Dropdown overlay={menu} trigger={["click"]}>
+            <a href="#" />
+          </Dropdown>
         </Menu.Item>
         <Menu.Item key="settings">
           <UserDropDown user={user} history={history} />
