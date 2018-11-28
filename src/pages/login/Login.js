@@ -113,7 +113,11 @@ class NormalLoginForm extends Component {
                   >
                     Log in
                   </Button>
-                  {this.state.error ? <p>{this.state.error}</p> : null}
+                  {this.state.error ? (
+                    <p style={{ color: "red", textAlign: "center" }}>
+                      {this.state.error}
+                    </p>
+                  ) : null}
                 </FormItem>
               </Form>
             </Card>
