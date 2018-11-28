@@ -9,6 +9,10 @@ const cookies = new Cookies();
 const FormItem = Form.Item;
 
 class NormalLoginForm extends Component {
+  state = {
+    loading: false
+  };
+
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -18,14 +22,13 @@ class NormalLoginForm extends Component {
         AuthService.login(values)
           .then(response => {
             cookies.set(TOKEN, response.headers["authorization"]);
-            console.log("response: ", response);
+            console.log("response1: ", response);
             AuthService.loginToOkta(values)
               .then(response => {
-                cookies.set(USER, response.data._embedded.user);
+                const user = response.data ? response.data._embedded.user : "";
+                cookies.set(USER, user);
                 this.props.history.push("/dashboard");
-                // cookies.set(TOKEN, response.headers["authorization"]);
-                console.log("response: ", response);
-                // cookies.set(TOKEN, response.data.sessionToken);
+                console.log("response2: ", response);
               })
               .catch(err => {
                 console.log("err: ", err.response);
@@ -36,6 +39,10 @@ class NormalLoginForm extends Component {
           });
       }
     });
+  };
+
+  enterLoading = () => {
+    this.setState({ loading: true });
   };
 
   render() {
@@ -90,6 +97,8 @@ class NormalLoginForm extends Component {
                     type="primary"
                     htmlType="submit"
                     className="login-form-button"
+                    loading={this.state.loading}
+                    onClick={this.enterLoading}
                   >
                     Log in
                   </Button>

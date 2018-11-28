@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Row, Col, Card, Icon, Carousel, Modal, Divider } from "antd";
+import { Row, Col, Button, Card, Icon, Carousel, Modal, Divider } from "antd";
 import "./Apps.css";
 import AppService from "../../services/AppService";
 import { Tabs } from "antd";
@@ -9,7 +9,9 @@ const TabPane = Tabs.TabPane;
 class Apps extends Component {
   constructor(props) {
     super(props);
-    const panes = [{ title: "Work", content: "", key: "1" }];
+    const panes = [
+      { title: "Work", content: "", key: "default", closable: false }
+    ];
     this.state = {
       visible: false,
       selectedApp: null,
@@ -59,13 +61,13 @@ class Apps extends Component {
     });
   }
 
-  handleOk = e => {
-    console.log(e);
-    this.setState({
-      visible: false,
-      selectedApp: null
-    });
-  };
+  // handleOk = e => {
+  //   console.log(e);
+  //   this.setState({
+  //     visible: false,
+  //     selectedApp: null
+  //   });
+  // };
 
   handleCancel = e => {
     console.log(e);
@@ -73,6 +75,15 @@ class Apps extends Component {
       visible: false,
       selectedApp: null
     });
+  };
+
+  showDefaultTab = (pane, apps) => {
+    if (pane.key === "default") {
+      return (
+        <AppItems apps={apps} showHelpModal={this.showHelpModal.bind(this)} />
+      );
+    }
+    return <p>{pane.content}</p>;
   };
 
   render() {
@@ -156,20 +167,19 @@ class Apps extends Component {
         <div style={{ background: "#ECECEC", padding: "40px" }}>
           <div className="card-container">
             <Tabs
-              hideAdd
+              // hideAdd
               onChange={this.onChange}
               activeKey={this.state.activeKey}
               type="editable-card"
               onEdit={this.onEdit}
             >
               {this.state.panes.map(pane => (
-                <TabPane tab={pane.title} key={pane.key}>
-                  {
-                    <AppItems
-                      apps={apps}
-                      showHelpModal={this.showHelpModal.bind(this)}
-                    />
-                  }
+                <TabPane
+                  tab={pane.title}
+                  key={pane.key}
+                  closable={pane.closable}
+                >
+                  {this.showDefaultTab(pane, apps)}
                 </TabPane>
               ))}
             </Tabs>
@@ -178,7 +188,6 @@ class Apps extends Component {
         <Modal
           title={`Details of ${modalTitle}`}
           visible={this.state.visible}
-          onOk={this.handleOk}
           onCancel={this.handleCancel}
           footer={null}
           style={{ padding: "24px 0 24px 0" }}

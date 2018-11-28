@@ -1,7 +1,7 @@
 import axiosInstance from "../utils/AuthInterceptor";
 
 const Api = {
-  login: function() {
+  login: function(data) {
     return axiosInstance.post("/login", {
       userName: "user",
       password: "secret"
