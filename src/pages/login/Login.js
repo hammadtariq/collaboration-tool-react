@@ -10,7 +10,8 @@ const FormItem = Form.Item;
 
 class NormalLoginForm extends Component {
   state = {
-    loading: false
+    loading: false,
+    error: ""
   };
 
   handleSubmit = e => {
@@ -25,17 +26,27 @@ class NormalLoginForm extends Component {
             console.log("response1: ", response);
             AuthService.loginToOkta(values)
               .then(response => {
-                const user = response.data ? response.data._embedded.user : "";
-                cookies.set(USER, user);
-                this.props.history.push("/dashboard");
                 console.log("response2: ", response);
+                if (response.data) {
+                  this.setState({ loading: false });
+                  cookies.set(USER, response.data._embedded.user);
+                  this.props.history.push("/dashboard");
+                } else {
+                  throw "Internal Server Error";
+                }
               })
               .catch(err => {
-                console.log("err: ", err.response);
+                console.log("err2: ", err);
+                cookies.remove(TOKEN);
+                this.setState({ error: err });
+                this.setState({ loading: false });
               });
           })
           .catch(err => {
-            console.log("err: ", err.response);
+            console.log("err1: ", err);
+            cookies.remove(TOKEN);
+            this.setState({ error: err.response });
+            this.setState({ loading: false });
           });
       }
     });
@@ -102,6 +113,7 @@ class NormalLoginForm extends Component {
                   >
                     Log in
                   </Button>
+                  {this.state.error ? <p>{this.state.error}</p> : null}
                 </FormItem>
               </Form>
             </Card>
